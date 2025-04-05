@@ -1,29 +1,77 @@
 "use client";
 
-import Image from "next/image";
-
 export default function WhoWeAre() {
   return (
-    <div className="max-w-screen-lg mx-auto py-16 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center px-4 md:px-0">
-            <div>
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-                    Who We Are
-                </h2>
-                <p className="text-justify md:text-left text-gray-600 leading-relaxed text-lg">
-                    CHED Solutions is a consulting organization dedicated to transforming lives by addressing the vital intersections between health, environment, climate change, and sustainable development. By championing cross-sectoral integration, leveraging innovation, and unlocking diverse funding streams, we drive impactful solutions that empower communities and build resilience for a sustainable future.
-                </p>
-            </div>
-            <div className="relative">
-                <Image
-                    src="data:image/jpeg;base64,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"
-                    alt="Who We Are"
-                    width={200}
-                    height={200}
-                    className="rounded-3xl shadow-lg object-cover w-full"
-                />
-            </div>
+    <section className="max-w-6xl mx-auto px-6 py-20">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        {/* Text Section */}
+        <div className="space-y-6">
+          <h2 className="text-4xl font-extrabold text-gray-900 leading-tight animate-fade-in">
+            Who We Are
+          </h2>
+          <p className="text-gray-700 leading-relaxed text-lg animate-fade-in delay-200">
+            Abbabor Development Consult (ADC) is an Ethiopia-based consulting firm dedicated to 
+            providing research solutions that empower governments and development organizations 
+            in achieving social and economic progress. <br /><br />
+            Our expertise lies in designing, monitoring, and evaluating strategies aligned with 
+            local and global development objectives. Through evidence-based policy and rigorous 
+            research, we strive to create meaningful impact and sustainable solutions for Africa&apos;s 
+            future.
+          </p>
         </div>
-    </div>
+
+        {/* Image Section */}
+        <div className="relative group">
+          <div className="overflow-hidden rounded-3xl shadow-lg">
+            <img
+              src="/whoWeAre.png"
+              alt="Who We Are"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
+
+
+
+
+
+
+// "use client";
+
+// import Image from "next/image";
+
+// export default function WhoWeAre() {
+//   return (
+//     <div className="max-w-screen-lg mx-auto py-16 md:px-8">
+//         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center px-4 md:px-0">
+//             <div>
+//                 <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+//                     Who We Are
+//                 </h2>
+//                 <p className="text-justify md:text-left text-gray-600 leading-relaxed text-lg">
+//                 Abbabor Development Consult (ADC) is an Ethiopia based consulting firm 
+//                 which provides research solutions that improve the ability of government and development 
+//                 organizations to advance on social and economic objectives for a better future. We design, 
+//                 monitor, evaluate and align strategies that support local and global objectives and development plans. 
+//                 We are driven by a passion to make a difference by contributing to a better future for Africa. We 
+//                 believe evidence-based policy and the use of rigorous, timely and relevant research is the surest way 
+//                 to improve policy and programming. Our role in enhancing the capabilities of people of Ethiopia is to 
+//                 provide research solutions for development. Our insights and analytics inform the policies, strategies 
+//                 and programmes of governments, donors and civil society working to enhance the social and economic 
+//                 potential of people living in the continent. We called the consulting firm Abbabor because we aspire to 
+//                 create sustainable solutions which will &apos;make the difference&apos; and not just &apos;be different&apos;.
+//                 </p>
+//             </div>
+//             <div className="relative">
+//                 <img
+//                     src="/whoWeAre.png"
+//                     alt="Who We Are"
+//                 />
+//             </div>
+//         </div>
+//     </div>
+//   );
+// }

@@ -3,12 +3,13 @@ import Head from "next/head";
 import ContactForm from "../components/ContactForm";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { Phone } from "@mui/icons-material";
 
 export default function Contact() {
   return (
     <>
       <Header />
-      <div className="bg-gray-50">
+      <div className="bg-gray-50 text-gray-600">
         <Head>
           <title>Contact Us</title>
           <meta name="description" content="Contact our team for any inquiries" />
@@ -28,7 +29,7 @@ export default function Contact() {
                   Have questions or just want to say hello? We&apos;re happy to hear from you!
                 </p>
 
-                <h2 className="text-2xl font-semibold text-blue-600 pt-2">Our Address</h2>
+                <h2 className="text-2xl font-semibold pt-2">Our Address</h2>
                 <div>
                   <h3 className="font-semibold text-gray-900">Cape Town, South Africa</h3>
                   <p className="text-gray-700">
@@ -36,21 +37,27 @@ export default function Contact() {
                     Cape Town, 7550 <br />
                     South Africa
                   </p>
-                  <p className="text-gray-700">
-                    Phone: <a href="tel:+279876543210" className="text-blue-600 hover:text-blue-800">+279876543210</a>
-                  </p>
+                  <li className="flex items-center space-x-2">
+                    <Phone className="text-green-500 w-5 h-5" />
+                    <a href="tel:+279876543210" className="hover:underline">+279876543210</a>
+                  </li>
                 </div>
 
-                <div>
+                <div className="pt-2">
                   <h3 className="font-semibold text-gray-900">Addis Ababa, Ethiopia</h3>
                   <p className="text-gray-700">
                     Roadmap Building (Near Lem Hotel) <br />
                     Bole Sub city, Woreda 04 <br />
                     Addis Ababa, Ethiopia
                   </p>
-                  <p className="text-gray-700">
-                    Phone: <a href="tel:+251944272121" className="text-blue-600 hover:text-blue-800">+251944272121</a>
-                  </p>
+                  <li className="flex items-center space-x-2">
+                    <Phone className="text-green-500 w-5 h-5" />
+                    <a href="tel:+251911364755" className="hover:underline">+251911364755</a>
+                  </li>
+                  <li className="flex items-center space-x-2">
+                    <Phone className="text-green-500 w-5 h-5" />
+                    <a href="tel:+251984811023" className="hover:underline">+251984811023</a>
+                  </li>
                 </div>
               </div>
 
@@ -101,7 +108,7 @@ export default function Contact() {
 //                   <div>
 //                     <h3 className="font-semibold text-gray-900">Cape Town, South Africa</h3>
 //                     <p className="text-gray-700">
-//                       9 Vintage, 47 Falcon Street, D’Urbanvalle <br />
+//                       9 Vintage, 47 Falcon Street, DUrbanvalle <br />
 //                       Cape Town, 7550 <br />
 //                       South Africa
 //                     </p>

@@ -6,17 +6,17 @@ const data = [
   {
     title: "Mission",
     description:
-      "Improving lives by bridging the vital connections between health, environment, and development.",
+      "Our core mission is to provide high quality <b>consultancy</b>, <b>training</b> and <b>research services</b> to our clients so as to help them make distinct and significant improvements in their programmes and projects.",
   },
   {
     title: "Vision",
     description:
-      "To be a global leader in sustainable solutions that create lasting positive impacts on communities.",
+      "Our vision is to become a <b>leading</b>, <b>preferred</b> and <b>trusted</b> development consulting firm in East and Horn of Africa. We use the most up-to-date research and evaluation designs and methods to inform development strategy in the region.",
   },
   {
-    title: "Objective",
+    title: "Core Values",
     description:
-      "Our objective is to implement programs that empower communities and improve the quality of life sustainably.",
+      "Our core values of <b>Integrity</b>, <b>Respect</b>, <b>Excellence</b>, <b>Innovation</b>, and <b>Independence</b> guide us in delivering ethical, high-quality, and impactful solutions with creativity and impartiality.",
   },
 ];
 
@@ -50,54 +50,60 @@ export default function MissionVisionObjective() {
   }, [isSmallScreen]);
 
   return (
-    <div className="max-w-screen-lg mx-auto flex flex-wrap overflow-hidden justify-center items-center gap-6 px-4 py-6 md:py-10 text-gray-600">
-      {isSmallScreen ? (
-        <div className="relative w-full max-w-xs h-56 overflow-hidden">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeIndex}
-              initial={{ x: 100, opacity: 0 }} // Start off-screen (right)
-              animate={{ x: 0, opacity: 1 }} // Slide in to center
-              exit={{ x: -100, opacity: 0 }} // Slide out to left
-              transition={{ duration: 0.5 }} // Smooth transition
-              className="absolute w-full h-full bg-white shadow-lg rounded-3xl p-6 text-center flex flex-col justify-center items-center"
-            >
-              <h2 className="text-xl font-bold mb-4">{data[activeIndex].title}</h2>
-              <p className="text-sm">{data[activeIndex].description}</p>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      ) : (
-        <div className="flex justify-center items-center gap-6">
-          {isMediumScreen
-            ? data.slice(0, 2).map((item, index) => ( // Show only first two for medium screens
-                <motion.div
-                  key={index}
-                  className="bg-white w-80 h-56 shadow-lg rounded-3xl p-6 flex flex-col justify-center items-center text-center"
-                  initial={{ opacity: 0, y: 100 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  viewport={{ once: false }}
-                >
-                  <h2 className="text-2xl font-bold mb-4">{item.title}</h2>
-                  <p className="text-md">{item.description}</p>
-                </motion.div>
-              ))
-            : data.map((item, index) => ( // Show all items for large screens
-                <motion.div
-                  key={index}
-                  className="bg-white w-80 h-56 shadow-lg rounded-3xl p-6 flex flex-col justify-center items-center text-center"
-                  initial={{ opacity: 0, y: 100 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  viewport={{ once: false }}
-                >
-                  <h2 className="text-2xl font-bold mb-4">{item.title}</h2>
-                  <p className="text-md">{item.description}</p>
-                </motion.div>
-              ))}
-        </div>
-      )}
-    </div>
+      <div className="max-w-6xl mx-auto flex flex-wrap overflow-hidden justify-center items-center gap-6 text-gray-600 px-4 py-6 md:py-10">
+        {isSmallScreen ? (
+          <div className="relative w-full max-w-xs h-56 overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeIndex}
+                initial={{ x: 100, opacity: 0 }} // Start off-screen (right)
+                animate={{ x: 0, opacity: 1 }} // Slide in to center
+                exit={{ x: -100, opacity: 0 }} // Slide out to left
+                transition={{ duration: 0.5 }} // Smooth transition
+                className="absolute w-full h-full bg-white shadow-lg rounded-3xl p-6 text-center flex flex-col justify-center items-center"
+              >
+                <h2 className="text-xl font-bold mb-4">{data[activeIndex].title}</h2>
+                {/* <p className="text-sm">{data[activeIndex].description}</p> */}
+                <p className="text-sm" dangerouslySetInnerHTML={{ __html: data[activeIndex].description }} />
+
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        ) : (
+          <div className="flex justify-center items-center gap-6">
+            {isMediumScreen
+              ? data.slice(0, 2).map((item, index) => ( // Show only first two for medium screens
+                  <motion.div
+                    key={index}
+                    className="bg-white w-80 h-56 shadow-lg rounded-3xl p-6 flex flex-col justify-center items-center text-center"
+                    initial={{ opacity: 0, y: 100 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.2 }}
+                    viewport={{ once: false }}
+                  >
+                    <div className="">
+                      <h2 className="text-2xl font-bold mb-4">{item.title}</h2>
+                      <p className="text-sm" dangerouslySetInnerHTML={{ __html: item.description }}/>
+                    </div>
+                  </motion.div>
+                ))
+              : data.map((item, index) => ( // Show all items for large screens
+                  <motion.div
+                    key={index}
+                    className="bg-white w-80 h-56 shadow-lg rounded-3xl p-6 flex flex-col justify-center items-center text-center"
+                    initial={{ opacity: 0, y: 100 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.2 }}
+                    viewport={{ once: false }}
+                  >
+                    <div className="">
+                      <h2 className="text-2xl font-bold mb-4">{item.title}</h2>
+                      <p className="text-sm" dangerouslySetInnerHTML={{ __html: item.description }}/>
+                    </div>
+                  </motion.div>
+                ))}
+          </div>
+        )}
+      </div>
   );
 }

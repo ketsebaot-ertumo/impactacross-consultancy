@@ -12,7 +12,7 @@ export default function ThankYou() {
       <CheckCircleIcon className="text-green-500" fontSize="inherit" style={{ fontSize: "4rem" }} />
       <h1 className="text-3xl font-bold text-gray-800 mt-4">Thank You!</h1>
       <p className="text-gray-600 mt-2">
-        Your message has been successfully sent. We’ll get back to you soon!
+        Your message has been successfully sent. We&apos;ll get back to you soon!
       </p>
 
       <div className="mt-6 flex space-x-4">
