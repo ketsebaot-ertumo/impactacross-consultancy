@@ -5,7 +5,7 @@ import HomeSectorialAreas from "./components/HomeSectorialAreas";
 import OurExpertise from "./components/OurExpertise";
 import OurTeam from "./components/OurTeam";
 import WhatWeDo from "./components/WhatWeDo";
-import WhyChooseUs from "@/components/WhyChooseUs";
+import WhyChooseUs from "./components/WhyChooseUs";
 
 export default function Home() {
   return (
