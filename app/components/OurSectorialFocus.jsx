@@ -63,7 +63,9 @@ export default function OurSectorialFocus() {
           <div className="relative flex items-center justify-center pt-4">
             <div className="w-32 border-t-2 border-gray-300"></div>
           </div>
-          <p className="md:leading-relaxed max-w-4xl mx-auto text-center my-6 pb-8">Our sectoral focus is informed by our professional orientation and experience both in Ethiopia and abroad. We have specialized in the following key development sectors.</p>
+          <p className="md:leading-relaxed max-w-4xl mx-auto text-center my-6 pb-8 text-lg">
+            <i>Our sectoral focus is informed by our professional orientation and experience both in Ethiopia and abroad. We have specialized in the following key development sectors.</i>
+          </p>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
             {data.map((item, index) => (

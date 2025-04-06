@@ -13,8 +13,8 @@ export default function Home() {
           <Services/>
           <ServicesComponent/>
           <OurSectorialFocus/>
-          <Footer/>
         </div>
+        <Footer/>
     </>
     
   );

@@ -58,9 +58,12 @@ export default function WhatWeDo() {
       {/* Large Screen Layout */}
       <div className="hidden lg:block bg-gray-50 text-gray-600 py-16 px-8 border-gray-300 border-t">
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-8">What We Do</h2>
-          <p className="max-w-2xl mx-auto">
-            Our approach integrates research, strategy, and action to create meaningful and lasting impact.
+          <h2 className="text-4xl font-bold">What We Do</h2>
+          <div className="relative flex items-center justify-center mb-8 pt-4">
+            <div className="w-32 border-t-2 border-gray-300"></div>
+          </div>
+          <p className="max-w-2xl mx-auto text-lg">
+            <i>Our approach integrates research, strategy, and action to create meaningful and lasting impact.</i>
           </p>
         </div>
 

@@ -7,14 +7,16 @@ import { FaLinkedin, FaTwitter } from "react-icons/fa";
 
 const teamMembers = [
   {
+    id: 1,
     name: "Kassahun K. Suleman(PhD)",
     position: "Founder & CEO",
     image: "/ourTeam.png",
     linkedin: "https://linkedin.com/in/johndoe",
     twitter: "https://twitter.com/johndoe",
-    email: "kassahunks@abbabor.com"
+    email: "kassahunks@abbabor.com",
   },
   {
+    id: 2,
     name: "Mr. Abraham Getachew",
     position: "Operation Manager",
     image: "/ourTeam.png",
@@ -23,6 +25,7 @@ const teamMembers = [
     email: "abrahamg@abbabor.com"
   },
   {
+    id: 3,
     name: "Zerihun Berhane(PhD)",
     position: "Research Associate",
     image: "/ourTeam.png",
@@ -31,6 +34,7 @@ const teamMembers = [
     email: "test@abbabor.com"
   },
   {
+    id: 4,
     name: "Ross Harvey",
     position: "Research Associate",
     image: "/ourTeam.png",
@@ -39,6 +43,7 @@ const teamMembers = [
     email: "test@abbabor.com"
   },
   {
+    id: 5,
     name: "Mr. Cyriaque Hakizimana",
     position: "Research Associate",
     image: "/ourTeam.png",
@@ -47,6 +52,7 @@ const teamMembers = [
     email: "test@abbabor.com"
   },
   {
+    id: 6,
     name: "Elise van der Mark",
     position: "Research Associate",
     image: "/ourTeam.png",
@@ -58,7 +64,7 @@ const teamMembers = [
 
 export default function OurTeam() {
   return (
-    <section className="py-16 px-6 text-gray-700 bg-gray-50">
+    <section id="team" className="py-16 px-6 text-gray-600 bg-gray-50">
       <div className="max-w-6xl mx-auto text-center">
         <motion.h2
           className="text-4xl font-semibold mb-4 text-gray-800"
@@ -79,7 +85,9 @@ export default function OurTeam() {
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: false }}
         >
-          ADC prides itself on bringing to our clients a team of highly qualified, energetic, and dynamic professionals. We have over 40 roster-based temporary and full-time multidisciplinary professionals, each specializing in their respective fields.
+          <i>
+            ADC prides itself on bringing to our clients a team of highly qualified, energetic, and dynamic professionals. We have over 40 roster-based temporary and full-time multidisciplinary professionals, each specializing in their respective fields.
+          </i>
         </motion.p>
 
         <div className="flex flex-wrap justify-center gap-12 mt-12">
@@ -93,17 +101,20 @@ export default function OurTeam() {
               transition={{ duration: 0.6, delay: index * 0.4 }}
               viewport={{ once: false }}
             >
-              <div className="flex items-center justify-center mb-4">
-                <Image
-                  src={member.image}
-                  alt={member.name}
-                  width={120}
-                  height={120}
-                  className="rounded-full border-4 border-gray-200 shadow-lg"
-                />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800">{member.name}</h3>
-              <p className="text-sm text-gray-500">{member.position}</p>
+              <Link href={`/team-detail/${member.id}`} className="block">
+                <div className="flex items-center justify-center mb-4">
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    width={120}
+                    height={120}
+                    className="rounded-full border-4 border-gray-200 shadow-lg"
+                  />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-800">{member.name}</h3>
+                <p className="text-sm text-gray-500">{member.position}</p>
+              </Link>
+              
               <div className="flex justify-center gap-6 mt-4">
                 <Link href={member.linkedin} target="_blank" prefetch={true}>
                   <FaLinkedin className="text-blue-600 text-2xl hover:text-blue-800 transition-colors" />
