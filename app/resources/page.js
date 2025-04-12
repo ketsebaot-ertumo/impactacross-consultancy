@@ -4,58 +4,43 @@ import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import ResourceCard from "../components/ResourceCard";
-import { getLatestBlog } from "../lib/api";
+import { getLatestBlogPost, getLatestMultimedia, getLatestPublication, getLatestTraining } from "../lib/api";
 
 export default function ResourceGrid() {
-  const [resources, setResources] = useState([
-    {
-      id: 2,
-      name: "publications",
-      image: "/home.jpg",
-      title: "New Publications",
-      content:
-        "Tips and strategies for improving your web application's performance using built-in tools and code-splitting.",
-    },
-    {
-      id: 3,
-      name: "multimedia",
-      image: "/home.jpg",
-      title: "New Multimedia",
-      content:
-        "Tips and strategies for improving your web application's performance using built-in tools and code-splitting.",
-    },
-    {
-      id: 4,
-      name: "trainings",
-      image: "/home.jpg",
-      title: "New Trainings",
-      content:
-        "Tips and strategies for improving your web application's performance using built-in tools and code-splitting.",
-    },
-  ]);
+  // const [resources, setResources] = useState([
+  //   {
+  //     id: 3,
+  //     name: "Multimedias",
+  //     image: "/home.jpg",
+  //     title: "New Multimedia",
+  //     content:
+  //       "Tips and strategies for improving your web application's performance using built-in tools and code-splitting.",
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Trainings",
+  //     image: "/home.jpg",
+  //     title: "New Trainings",
+  //     content:
+  //       "Tips and strategies for improving your web application's performance using built-in tools and code-splitting.",
+  //   },
+  // ]);
 
+  const [resources, setResources] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const loadBlogs = async () => {
       try {
-        const latesBlog = await getLatestBlog();
+        const latestBlog = await getLatestBlogPost();
+        console.log("\n\n latest blog:", latestBlog)
 
-        if ( latesBlog.success ) {
-          const blog = latesBlog.data
-          const blogResource = {
-            id: blog.id,
-            name: blog.name,
-            image: blog.imageURL,
-            title: blog.title || "Latest Blog",
-            content: blog.content || "Read our latest blog post.",
-          };
-
-          // setResources((prev) => [blogResource, ...prev]);
+        if ( latestBlog?.success ) {
+          const blog = latestBlog.data
           setResources((prev) => {
-            const exists = prev.some((r) => r.id === blogResource.id);
-            return exists ? prev : [blogResource, ...prev];
+            const exists = prev.some((r) => r.id === blog.id);
+            return exists ? prev : [blog, ...prev];
           });
           
         } else{
@@ -70,6 +55,83 @@ export default function ResourceGrid() {
     };
 
     loadBlogs();
+  }, []);
+
+  useEffect(() => {
+    const loadPost = async () => {
+      try {
+        const latestPost = await getLatestPublication();
+
+        if ( latestPost.success ) {
+          const publication = latestPost.data
+          setResources((prev) => {
+            const exists = prev.some((r) => r.id === publication.id);
+            return exists ? prev : [publication, ...prev];
+          });
+        } else{
+          console.warn("No valid post returned.");
+        }
+      } catch (err) {
+        console.warn("No valid post returned.");
+        setError("Could not load post data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPost();
+  }, []);
+
+  
+  useEffect(() => {
+    const loadPost = async () => {
+      try {
+        const latestPost = await getLatestMultimedia();
+
+        if ( latestPost.success ) {
+          const post = latestPost.data
+      
+          setResources((prev) => {
+            const exists = prev.some((r) => r.id === post.id);
+            return exists ? prev : [post, ...prev];
+          });
+        } else{
+          console.warn("No valid multimedia post returned.");
+        }
+      } catch (err) {
+        console.warn("No valid multimedia post returned.");
+        setError("Could not load multimedia post data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPost();
+  }, []);
+
+  
+  useEffect(() => {
+    const loadTrainingPost = async () => {
+      try {
+        const latestPost = await getLatestTraining();
+
+        if ( latestPost.success ) {
+          const training = latestPost.data
+          setResources((prev) => {
+            const exists = prev.some((r) => r.id === training.id);
+            return exists ? prev : [training, ...prev];
+          });
+        } else{
+          console.warn("No valid training post returned.");
+        }
+      } catch (err) {
+        console.warn("No valid training post returned.");
+        setError("Could not load training post data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadTrainingPost();
   }, []);
 
   return (

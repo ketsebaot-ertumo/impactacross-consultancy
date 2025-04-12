@@ -3,16 +3,17 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const ResourceCard = ({ id, name, image, title, content }) => {
+const ResourceCard = ({ id, name, imageURL, title, content }) => {
+  const link= name.toLowerCase();
   return (
     <Link
-      href={`/resources/${name}`}
+      href={`/resources/${link}`}
       className="min-h-40 group bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col md:flex-row gap-8 h-full"
     >
       {/* Image */}
       <div className="relative w-full md:w-1/3 h-full rounded-2xl overflow-hidden">
         <Image
-          src={image}
+          src={imageURL}
           alt={title}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -21,7 +22,10 @@ const ResourceCard = ({ id, name, image, title, content }) => {
 
       {/* Text Content */}
       <div className="flex flex-col justify-between w-full md:w-2/3 p-6">
-        <h3 className="text-2xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors mb-4 line-clamp-1">
+        <h3 className="text-2xl font-bold text-blue-600 transition-colors mb-4 line-clamp-1">
+          {name}
+        </h3>
+        <h3 className="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors mb-4 line-clamp-1">
           {title}
         </h3>
         <p className="text-base text-gray-600 leading-relaxed line-clamp-2">

@@ -71,7 +71,7 @@ export default function Footer() {
         </div>
 
         {/* Footer Bottom */}
-        <div className="mt-8 text-center border-t border-gray-700 pt-6">
+        <div className="lg:mt-8 text-center lg:border-t border-gray-700 lg:pt-6">
           <p>© {new Date().getFullYear()} ImpactAcross. All rights reserved.</p>
         </div>
       </div>

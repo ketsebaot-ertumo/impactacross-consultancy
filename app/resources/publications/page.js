@@ -5,8 +5,9 @@ import Image from "next/image";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import { useEffect, useState } from "react";
-import { fetchAllPublications } from "../../lib/publication";
+// import { fetchAllPublications } from "../../lib/publication";
 import Loader from "../../components/Loader";
+import { getAllPublication } from "../../lib/api";
 
 export default function Publications() {
 
@@ -21,8 +22,7 @@ export default function Publications() {
     useEffect(() => {
       const loadPublications = async () => {
         try {
-          const response = await fetchAllPublications(currentPage, pageSize);
-          console.log("\n\nResponse", response);
+          const response = await getAllPublication(currentPage, pageSize);
           
           if (response.data?.length) {
             setResources(response.data);
@@ -59,12 +59,12 @@ export default function Publications() {
                         <p className="text-lg">No publications found.</p>
                     </main>
                 ) : (
-                    <div>
-                        <main className="container max-w-6xl mx-auto px-6 py-12 text-gray-800">
-                            <h1 className="text-4xl font-bold mb-12 text-center">📚 Publications</h1>
+                    <div className="max-w-6xl mx-auto">
+                        <main className="container px-8 py-12 text-gray-800">
+                            <h1 className="text-4xl font-bold text-center">📚 Publications</h1>
                         </main>
                         
-                        <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                        <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 px-8">
                             {resources.map((item) => (
                                 <Link key={item.id} href={`/resources/${item.name}/${item.id}`} passHref>
                                     <div className="group border rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 bg-white cursor-pointer">
@@ -77,16 +77,19 @@ export default function Publications() {
                                             className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-300"
                                         />
                                         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent px-4 py-2 text-white text-sm">
-                                            By {item.author} — {new Date(item.published_at).toLocaleDateString()}
+                                            By {item.author} —
+                                            {new Date(item.publishedAt).toLocaleDateString("en-US", {
+                                                year: "numeric", month: "long", day: "numeric",
+                                            })}
                                         </div>
                                         </div>
 
                                         {/* Content */}
                                         <div className="p-5 space-y-3">
-                                        <h3 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                                        <h3 className="line-clamp-2 text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
                                             {item.title}
                                         </h3>
-                                        <p className="text-gray-600 text-sm line-clamp-4">{item.content}</p>
+                                        <p className="text-gray-600 text-sm line-clamp-3">{item.content}</p>
                                         <span className="inline-block text-blue-500 text-sm font-medium mt-2 hover:underline">
                                             Read more →
                                         </span>
@@ -97,7 +100,7 @@ export default function Publications() {
                         </div>
 
                         {/* Pagination */}
-                        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mt-16 border-t pt-8">
+                        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mt-12 border-t py-8 px-8">
                             <div className="flex items-center space-x-3">
                                 <button
                                     onClick={() => handlePagination(currentPage - 1)}

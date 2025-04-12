@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import Footer from "../../../components/Footer";
 import Header from "../../../components/Header";
-import { fetchSinglePublicationPost } from "../../../lib/publication";
+// import { fetchSinglePublicationPost } from "../../../lib/publication";
 import Image from "next/image";
 import { notFound, useParams } from "next/navigation";
 import Loader from "../../../components/Loader";
 import { Download } from "lucide-react";
+import { getSinglePublicationPost } from "../../../lib/api";
 
 export default function PublicationDetail() {
   const [post, setPost] = useState({});
@@ -18,18 +19,9 @@ export default function PublicationDetail() {
   useEffect(() => {
     const loadPost = async () => {
       try {
-        const latestPost = await fetchSinglePublicationPost(id);
+        const latestPost = await getSinglePublicationPost(id);
         if (latestPost) {
-          setPost({
-            id: latestPost.id,
-            name: latestPost.name,
-            image: latestPost.imageURL || null,
-            title: latestPost.title || "Latest Publication",
-            content: latestPost.content || "Read our latest publication.",
-            file: latestPost.fileURL,
-            author: latestPost.author,
-            published_at: latestPost.published_at,
-          });
+          setPost( latestPost );
         }
       } catch (err) {
         console.error(err);
@@ -62,21 +54,23 @@ export default function PublicationDetail() {
             <div>
                 <section className="relative h-[45vh] lg:h-[60vh] w-full flex items-center justify-center overflow-hidden">
                     <Image
-                    src={post.image}
-                    alt={post.title}
-                    fill
-                    className="object-cover brightness-[0.5]"
+                      src={post.imageURL}
+                      alt={post.title}
+                      fill
+                      className="object-cover brightness-[0.5]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10" />
                     <div className="z-20 text-center px-6">
-                    <h1 className="text-white font-serif text-4xl md:text-5xl lg:text-6xl font-bold drop-shadow-lg">
-                        {post.title}
-                    </h1>
-                    <p className="mt-4 text-gray-300 text-sm">
-                        {post.author && `By ${post.author}`} &bull;{" "}
-                        {post?.published_at &&
-                        new Date(post.published_at).toLocaleDateString()}
-                    </p>
+                      <h1 className="text-white font-serif text-4xl md:text-5xl lg:text-6xl font-bold drop-shadow-lg">
+                          {post.title}
+                      </h1>
+                      <p className="mt-4 text-gray-300 text-sm">
+                          {post.author && `By ${post.author}`} &bull;{" "}
+                          {post?.published_at &&
+                            new Date(post.published_at).toLocaleDateString("en-US", {
+                              year: "numeric", month: "long", day: "numeric",}
+                          )}
+                      </p>
                     </div>
                 </section>
 
@@ -87,10 +81,10 @@ export default function PublicationDetail() {
                     {/* Featured Image */}
                     <div className="relative w-full h-60 md:h-80 lg:h-[28rem] mb-10 rounded-xl overflow-hidden shadow-lg">
                         <Image
-                        src={post.image}
-                        alt={post.title}
-                        fill
-                        className="object-cover"
+                          src={post.imageURL}
+                          alt={post.title}
+                          fill
+                          className="object-cover"
                         />
                     </div>
 
@@ -101,20 +95,20 @@ export default function PublicationDetail() {
                 
 
                     {/* Floating File Download */}
-                    {post?.file && (
-                        <div className="mt-12 text-center">
+                    {post?.fileURL && (
+                      <div className="mt-12 text-center">
                         <a
-                            href={post?.file}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center gap-2 bg-gradient-to-tr from-blue-300 to-blue-500 hover:from-blue-600 hover:to-blue-300 text-white px-6 py-3 rounded-full text-base font-medium shadow-lg transition-all duration-200 hover:scale-105"
+                          href={post?.fileURL}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center gap-2 bg-gradient-to-tr from-blue-300 to-blue-500 hover:from-blue-600 hover:to-blue-300 text-white px-6 py-3 rounded-full text-base font-medium shadow-lg transition-all duration-200 hover:scale-105"
                         >
-                            <Download className="w-5 h-5" />
+                          <Download className="w-5 h-5" />
                             Download PDF
                         </a>
-                        </div>
+                      </div>
                     )}
-                    </div>
+                  </div>
                 </section>
                     
                 <Footer />
