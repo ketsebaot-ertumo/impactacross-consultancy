@@ -1,6 +1,6 @@
 "use client";
 
-import { Email, Facebook, Instagram, LinkedIn, Mail, Phone } from "@mui/icons-material";
+import { Email, Facebook, Instagram, LinkedIn, Mail, Phone, Twitter } from "@mui/icons-material";
 import { MapPin } from "lucide-react";
 
 export default function Footer() {
@@ -44,7 +44,7 @@ export default function Footer() {
                   <span>Cape Town, 7550,South Africa</span> 
                 </li>
                 <li className="flex items-center space-x-2">
-                  <Email className="text-blue-600 w-5 h-5" />
+                  <Mail className="text-blue-600 w-5 h-5" />
                   <a href="mailto:info@abbabor.com" className="hover:underline">info@abbabor.com</a>
                 </li>
                 <li className="flex items-center space-x-2">
@@ -63,7 +63,7 @@ export default function Footer() {
             <h3 className="text-lg font-semibold text-white mb-4">Follow Us</h3>
             <div className="flex space-x-4">
                 <a href="https://facebook.com/" className="hover:text-blue-600"><Facebook /></a>
-                <a href="https://twitter.com/" className="hover:text-sky-500"><Tiwter /></a>
+                <a href="https://twitter.com/" className="hover:text-sky-500"><Twitter /></a>
                 <a href="https://www.linkedin.com/" className="hover:text-blue-600"><LinkedIn /></a>
                 <a href="https://www.instagram.com/" className="hover:text-pink-500"><Instagram /></a>
             </div>
