@@ -13,6 +13,21 @@ const nextConfig = {
         },
       ];
     },
+    images: {
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'res.cloudinary.com',
+          pathname: '/**',
+        },
+        // Google Drive
+        {
+          protocol: 'https',
+          hostname: 'drive.google.com',
+          pathname: '/uc?id=*',
+        },
+      ],
+    },
   };
   
   export default nextConfig;

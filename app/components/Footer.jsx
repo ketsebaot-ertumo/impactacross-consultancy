@@ -1,6 +1,6 @@
 "use client";
 
-import { Email, Facebook, Instagram, LinkedIn, Mail, Phone, Twitter } from "@mui/icons-material";
+import { Email, Facebook, Instagram, LinkedIn, Mail, Phone } from "@mui/icons-material";
 import { MapPin } from "lucide-react";
 
 export default function Footer() {
@@ -62,10 +62,10 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold text-white mb-4">Follow Us</h3>
             <div className="flex space-x-4">
-                <a href="https://facebook.com/" className="hover:text-white"><Facebook /></a>
-                <a href="https://twitter.com/" className="hover:text-white"><Twitter /></a>
-                <a href="https://www.linkedin.com/" className="hover:text-white"><LinkedIn /></a>
-                <a href="https://www.instagram.com/" className="hover:text-white"><Instagram /></a>
+                <a href="https://facebook.com/" className="hover:text-blue-600"><Facebook /></a>
+                <a href="https://twitter.com/" className="hover:text-sky-500"><Tiwter /></a>
+                <a href="https://www.linkedin.com/" className="hover:text-blue-600"><LinkedIn /></a>
+                <a href="https://www.instagram.com/" className="hover:text-pink-500"><Instagram /></a>
             </div>
           </div>
         </div>
