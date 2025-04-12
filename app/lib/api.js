@@ -4,6 +4,7 @@ import apiClient from "./apiClient";
 export async function getLatestBlog() {
     try {
       const res = await apiClient.get('/blog/search/latest');
+      console.log("\n\nresponse:", res)
       if (res.status === 200) {
         return res.data;
       } else {
@@ -32,6 +33,24 @@ export async function getAllBlog( page, limit ) {
     return null;
   }
 }
+
+// get single blog post
+export async function getSingleBlogPost(id) {
+  try {
+    const res = await apiClient.get(`/blog/${id}`);
+    console.log("\n\nresponse:", res)
+    if (res.status === 200) {
+      return res.data.data;
+      console.log()
+    } else {
+      return null;
+    }
+  } catch (err) {
+    console.error("Error fetching latest blog:", err);
+    return null;
+  }
+};
+
 
 // get latest publication post
 export async function getLatestPublication() {

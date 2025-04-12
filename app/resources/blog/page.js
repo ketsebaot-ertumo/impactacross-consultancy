@@ -3,85 +3,100 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { fetchAllBlog } from "../../lib/blog";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Loader from "../../components/Loader";
+import { getAllBlog } from "../../lib/api";
+import { notFound } from "next/navigation";
 
 export default function Blogs() {
-  const [resources, setResources] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [pageSize, setPageSize] = useState(3);
-  const [total, setTotal] = useState(5);
+    const [resources, setResources] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [pageSize, setPageSize] = useState(2);
 
-  useEffect(() => {
-    const loadBlogs = async () => {
-      try {
-        const response = await fetchAllBlog(currentPage, pageSize);
-        if (response.data?.length) {
-          setResources(response.data);
-          setTotalPages(response.pagination.totalPages);
-          setTotal(response.pagination.total);
-          setCurrentPage(response.pagination.page);
+    useEffect(() => {
+        const loadBlogs = async () => {
+        try {
+            const response = await getAllBlog(currentPage, pageSize);
+            if (response.data?.length) {
+            setResources(response.data);
+            setTotalPages(response.pagination.totalPages);
+            setCurrentPage(response.pagination.page);
+            }
+        } catch (err) {
+            setError("Could not load blog data.");
+        } finally {
+            setLoading(false);
         }
-      } catch (err) {
-        setError("Could not load blog data.");
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadBlogs();
-  }, [currentPage, pageSize]);
+        };
+        loadBlogs();
+    }, [currentPage, pageSize]);
 
-  const handlePagination = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
+    const handlePagination = (page) => {
+        if (page >= 1 && page <= totalPages) {
+        setCurrentPage(page);
+        }
+    };
+
+    if(error || !resources){
+       return notFound();
     }
-  };
 
     return (
         <>
             <Header />
+                <main className="max-w-6xl mx-auto px-4 py-20 text-gray-900">
+                    <h1 className="text-4xl font-semibold text-center mb-20">
+                        📚 Blog Timeline
+                    </h1>
 
-            {loading ? (
-                <Loader />
-            ) : (
-                <div>
-                    <main className="max-w-7xl mx-auto px-6 py-12 text-gray-800">
-                        <h1 className="text-5xl font-bold text-center mb-12">📰 Blogs & News</h1>
-
-                        {/* Blog Grid */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-                            {resources.map((blog) => (
-                            <Link key={blog.id} href={`/resources/${blog.name}/${blog.id}`}>
-                                <div className="bg-white shadow-lg rounded-2xl overflow-hidden hover:shadow-xl transition-shadow duration-300 group">
+                    {loading ? (
+                        <Loader />
+                    ) : error ? (
+                        <p className="text-red-600 text-center">{error}</p>
+                    ) : (
+                        <div className="space-y-24">
+                            {resources.map((blog, index) => (
+                            <Link
+                                key={blog.id}
+                                href={`/resources/${blog.name}/${blog.id}`}
+                                className={`relative flex flex-col md:flex-row items-center ${
+                                index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                                } group hover:scale-[1.01] transition-transform`}
+                            >
+                                <div className="md:w-1/2 w-full overflow-hidden rounded-3xl shadow-xl relative h-[100px] sm:h-[300px]">
                                 <Image
-                                    src={blog?.imageURL}
-                                    alt={blog?.title}
-                                    width="500"
-                                    height="300"
-                                    className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
+                                    src={blog.imageURL}
+                                    alt={blog.title}
+                                    fill
+                                    className="object-cover group-hover:scale-105 transition-all duration-300"
                                 />
-                                <div className="p-6">
-                                    <h3 className="text-2xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
-                                    {blog.title}
-                                    </h3>
-                                    <p className="text-gray-600 text-sm line-clamp-3">{blog.content}</p>
-                                    <span className="inline-block mt-4 text-sm text-blue-500 hover:underline">
-                                    Read more →
-                                    </span>
                                 </div>
+
+                                <div className="md:w-1/2 w-full mt-8 md:mt-0 md:px-12 text-center md:text-left">
+                                    <h2 className="line-clamp-2 text-4xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">
+                                        {blog.title}
+                                    </h2>
+                                    <p className="text-gray-700 text-lg line-clamp-3">{blog.content}</p>
+                                    <div className="mt-6">
+                                        <span className="inline-block bg-blue-100 text-blue-600 px-4 py-1 rounded-full text-sm">
+                                            {new Date(blog.publishedAt).toLocaleDateString("en-US", {
+                                                year: "numeric", month: "long", day: "numeric",
+                                            })}
+                                        </span>
+                                    </div>
                                 </div>
                             </Link>
                             ))}
                         </div>
+                    )}
 
-                        {/* Pagination & Controls */}
-                        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-16 border-t pt-8">
-                            <div className="flex items-center space-x-2">
+                    {/* Pagination & Controls */}
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-16 border-t pt-8">
+                        <div className="flex items-center space-x-2">
                             <button
                                 onClick={() => handlePagination(currentPage - 1)}
                                 disabled={currentPage === 1}
@@ -109,9 +124,9 @@ export default function Blogs() {
                             >
                                 Next
                             </button>
-                            </div>
+                        </div>
 
-                            <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2">
                             <label htmlFor="pageSize" className="text-gray-700">
                                 Show:
                             </label>
@@ -124,19 +139,16 @@ export default function Blogs() {
                                 }}
                                 className="border border-gray-300 rounded px-3 py-1 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
-                                {[3, 5, 10, 25].map((size) => (
+                                {[2, 5, 10, 25].map((size) => (
                                 <option key={size} value={size}>
                                     {size} posts
                                 </option>
                                 ))}
                             </select>
-                            </div>
                         </div>
-                    </main>
-
-                    <Footer />
-                </div>
-            )}
+                    </div>
+                </main>
+            <Footer />
         </>
-    );
+     );
 }

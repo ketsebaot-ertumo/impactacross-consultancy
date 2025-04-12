@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import ResourceCard from "../components/ResourceCard";
-import { fetchLatestBlog } from "../lib/api";
+import { getLatestBlog } from "../lib/api";
 
 export default function ResourceGrid() {
   const [resources, setResources] = useState([
     {
       id: 2,
-      name: "Publications",
+      name: "publications",
       image: "/home.jpg",
       title: "New Publications",
       content:
@@ -18,7 +18,7 @@ export default function ResourceGrid() {
     },
     {
       id: 3,
-      name: "Multimedia",
+      name: "multimedia",
       image: "/home.jpg",
       title: "New Multimedia",
       content:
@@ -26,7 +26,7 @@ export default function ResourceGrid() {
     },
     {
       id: 4,
-      name: "Trainings",
+      name: "trainings",
       image: "/home.jpg",
       title: "New Trainings",
       content:
@@ -40,9 +40,10 @@ export default function ResourceGrid() {
   useEffect(() => {
     const loadBlogs = async () => {
       try {
-        const blog = await fetchLatestBlog();
+        const latesBlog = await getLatestBlog();
 
-        if (blog) {
+        if ( latesBlog.success ) {
+          const blog = latesBlog.data
           const blogResource = {
             id: blog.id,
             name: blog.name,
@@ -51,7 +52,14 @@ export default function ResourceGrid() {
             content: blog.content || "Read our latest blog post.",
           };
 
-          setResources((prev) => [blogResource, ...prev]);
+          // setResources((prev) => [blogResource, ...prev]);
+          setResources((prev) => {
+            const exists = prev.some((r) => r.id === blogResource.id);
+            return exists ? prev : [blogResource, ...prev];
+          });
+          
+        } else{
+          console.warn("No valid blog returned.");
         }
       } catch (err) {
         console.warn("No valid blog returned.");
@@ -83,29 +91,22 @@ export default function ResourceGrid() {
         </div>
 
         <section className="max-w-6xl mx-auto px-6 py-12">
-            <h2 className="text-4xl font-bold text-center text-gray-800 pb-4">Our Resources</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2">
+            <h2 className="text-4xl font-bold text-center text-gray-800 pb-12">Our Resources</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+              {resources.map((item) => (
+                <div key={item.id} className="h-full">
+                  <ResourceCard {...item} />
+                </div>
+              ))}
+            </div>
+            {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 {resources.map((item) => (
                     <ResourceCard key={item.id} {...item} />
                 ))}
-            </div>
+            </div> */}
         </section>
 
         <Footer/>
     </>
   );
 }
-
-
-
-
-
-{/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-  {resources.map((item) => (
-    <div key={item.id} className="h-full">
-      <ResourceCard {...item} />
-    </div>
-  ))}
-</div> */}
-
-

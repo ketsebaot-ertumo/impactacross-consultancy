@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Footer from "../../../components/Footer";
 import Header from "../../../components/Header";
-import { fetchSingleBlogPost } from "../../../lib/blog";
+// import { fetchSingleBlogPost } from "../../../lib/blog";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import Loader from "../../../components/Loader";
@@ -17,14 +17,15 @@ export default function BlogDetails() {
     useEffect(() => {
         const loadBlog = async () => {
         try {
-            const latestBlog = await fetchSingleBlogPost(id);
-            if (latestBlog) {
+            const blog = await getSingleBlogPost(id);
+            if (blog) {
             setBlog({
-                id: latestBlog.id,
-                name: latestBlog.name,
-                image: latestBlog.imageURL,
-                title: latestBlog.title || "Latest Blog",
-                content: latestBlog.content || "Read our latest blog post.",
+                // blog
+                id: blog.id,
+                name: blog.name,
+                image: blog.imageURL,
+                title: blog.title || "Latest Blog",
+                content: blog.content || "Read our latest blog post.",
             });
             }
         } catch (err) {
@@ -39,6 +40,9 @@ export default function BlogDetails() {
     }, [id]);
 
     if (loading) return <Loader />;
+    if(error || !blog || !blog?.id){
+        return notFound();
+    }
 
     return (
         <>

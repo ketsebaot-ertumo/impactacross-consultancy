@@ -21,11 +21,16 @@ const nextConfig = {
           pathname: '/**',
         },
         // Google Drive
+        // {
+        //   protocol: 'https',
+        //   hostname: 'drive.google.com',
+        //   pathname: '/uc?id=*',
+        // },
         {
           protocol: 'https',
           hostname: 'drive.google.com',
-          pathname: '/uc?id=*',
-        },
+          pathname: '/**',
+        }
       ],
     },
   };
