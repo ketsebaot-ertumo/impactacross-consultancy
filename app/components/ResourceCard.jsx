@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 const ResourceCard = ({ id, name, imageURL, mediaURL, title, content }) => {
-  const Name = name?.toUpperCase();
+  const Name = name?.charAt(0).toUpperCase() + name?.slice(1).toLowerCase();
+
   return (
     <Link
       href={`/resources/${name}`}
