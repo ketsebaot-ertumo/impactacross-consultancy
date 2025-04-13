@@ -6,7 +6,7 @@ import Image from "next/image";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Loader from "../../components/Loader";
-import { getAllBlog } from "../../lib/api";
+import { getAllBlog } from "../../lib/routes";
 import { notFound } from "next/navigation";
 
 export default function Blogs() {
@@ -19,22 +19,20 @@ export default function Blogs() {
 
     useEffect(() => {
         const loadBlogs = async () => {
-        try {
-            const response = await getAllBlog(currentPage, pageSize);
-            if (response.data?.length) {
-                setResources(response.data);
-                setTotalPages(response.pagination.totalPages);
-                setCurrentPage(response.pagination.page);
-            } else{
-                toast.error('No Valid Blog Post Returned.');
+            try {
+                const response = await getAllBlog(currentPage, pageSize);
+                if (response.data?.length) {
+                    setResources(response.data);
+                    setTotalPages(response.pagination.totalPages);
+                    setCurrentPage(response.pagination.page);
+                } 
+            } catch (err) {
+                toast.error('Could Not Load Blog Data.');
+                console.error("Could not load blog data:" +err.message)
+                setError("Could not load blog data.");
+            } finally {
+                setLoading(false);
             }
-        } catch (err) {
-            toast.error('Could Not Load Blog Data.');
-            console.error("Could not load blog data:" +err.message)
-            setError("Could not load blog data.");
-        } finally {
-            setLoading(false);
-        }
         };
         loadBlogs();
     }, [currentPage, pageSize]);
@@ -58,13 +56,13 @@ export default function Blogs() {
             ) : (
                 resources.length === 0 ? (
                     <main className="container max-w-6xl mx-auto px-6 py-12 text-center text-gray-500 py-36">
-                        <h1 className="text-4xl font-bold mb-6">📝 Blog Timeline</h1>
+                        <h1 className="text-4xl font-bold mb-6">❌ Oops!</h1>
                         <p className="text-lg">No Blog Post Found.</p>
                     </main>
                 ) : (
                         <div>
                             <main className="container px-8 py-12 text-gray-800">
-                                <h1 className="text-4xl font-bold text-center">📝  Blog Timeline</h1>
+                                <h1 className="text-4xl font-bold text-center">📝 Blog Timeline</h1>
                             </main>
                             <div className="space-y-24 max-w-6xl mx-auto">
                                 {resources.map((blog, index) => (
@@ -85,10 +83,10 @@ export default function Blogs() {
                                     </div>
 
                                     <div className="md:w-1/2 w-full mt-8 md:mt-0 md:px-12 text-center md:text-left">
-                                        <h2 className="line-clamp-2 text-4xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">
+                                        <h2 className="line-clamp-2 text-4xl font-bold text-gray-800 mb-4 group-hover:text-blue-600 transition-colors">
                                             {blog.title}
                                         </h2>
-                                        <p className="text-gray-700 text-lg line-clamp-3">{blog.content}</p>
+                                        <p className="text-gray-800 text-lg line-clamp-3">{blog.content}</p>
                                         <div className="inline-block italic text-blue-600 text-sm font-medium mt-3 transition-all duration-300 hover:underline hover:text-blue-800 hover:pl-1">
                                             Read more &gt;&gt;
                                         </div>

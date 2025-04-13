@@ -6,7 +6,7 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import { useEffect, useState } from "react";
 import Loader from "../../components/Loader";
-import { getAllMultimedias } from "../../lib/api";
+import { getAllMultimedias } from "../../lib/routes";
 import toast from "react-hot-toast";
 
 export default function Publications() {
@@ -29,8 +29,6 @@ export default function Publications() {
                 setTotalPages(response.pagination.totalPages);
                 setTotal(response.pagination.total);
                 setCurrentPage(response.pagination.page);
-            } else{
-                toast.error('No Valid Publication Post Returned.');
             }
         } catch (err) {
             toast.error('Could Not Load Multimedia Post Data.');

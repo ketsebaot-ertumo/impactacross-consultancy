@@ -6,7 +6,7 @@ import Header from "../../../components/Header";
 import Image from "next/image";
 import { notFound, useParams } from "next/navigation";
 import Loader from "../../../components/Loader";
-import { getSingleBlogPost } from "../../../lib/api";
+import { getSingleBlogPost } from "../../../lib/routes";
 import toast from "react-hot-toast";
 
 export default function BlogDetails() {

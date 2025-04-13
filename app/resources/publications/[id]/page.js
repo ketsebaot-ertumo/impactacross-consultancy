@@ -7,7 +7,7 @@ import Image from "next/image";
 import { notFound, useParams } from "next/navigation";
 import Loader from "../../../components/Loader";
 import { Download } from "lucide-react";
-import { getSinglePublicationPost } from "../../../lib/api";
+import { getSinglePublicationPost } from "../../../lib/routes";
 
 export default function PublicationDetail() {
   const [post, setPost] = useState({});
@@ -21,9 +21,6 @@ export default function PublicationDetail() {
         const latestPost = await getSinglePublicationPost(id);
         if (latestPost) {
           setPost( latestPost );
-        } else{
-          return notFound();
-          // toast.error('No Valid Publication Post Returned.');
         }
       } catch (err) {
         toast.error('Could Not Load Publication Data.');
@@ -38,7 +35,6 @@ export default function PublicationDetail() {
   }, [id]);
 
   if (loading) return <Loader />;
-  // if (error || !post || !post?.id) return notFound();
 
   return (
     <>

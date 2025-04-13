@@ -6,7 +6,7 @@ import Header from "../../../components/Header";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import Loader from "../../../components/Loader";
-import { getSingleMultimediaPost } from "../../../lib/api";
+import { getSingleMultimediaPost } from "../../../lib/routes";
 
 export default function PublicationDetail() {
   const [post, setPost] = useState({});
@@ -20,8 +20,6 @@ export default function PublicationDetail() {
         const latestPost = await getSingleMultimediaPost(id);
         if (latestPost) {
           setPost( latestPost );
-        } else{
-            return notFound();
         }
       } catch (err) {
         toast.error('Could Not Load Multimedia PostData.');

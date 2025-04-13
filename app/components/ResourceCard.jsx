@@ -4,10 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 const ResourceCard = ({ id, name, imageURL, mediaURL, title, content }) => {
-  const link= name.toLowerCase();
+  const Name = name?.toUpperCase();
   return (
     <Link
-      href={`/resources/${link}`}
+      href={`/resources/${name}`}
       className="min-h-40 group bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col md:flex-row gap-8 h-full"
     >
       {/* Image */}
@@ -23,7 +23,7 @@ const ResourceCard = ({ id, name, imageURL, mediaURL, title, content }) => {
       {/* Text Content */}
       <div className="flex flex-col justify-between w-full md:w-2/3 p-6">
         <h3 className="text-2xl font-bold text-blue-600 transition-colors mb-4 line-clamp-1">
-          {name}
+          {Name}
         </h3>
         <h3 className="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors mb-4 line-clamp-1">
           {title}
