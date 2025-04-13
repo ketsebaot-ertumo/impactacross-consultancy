@@ -5,11 +5,11 @@ export async function getLatestBlogPost() {
   try {
     const res = await apiClient.get('/blog/latest');
     console.log("\\n\\n\nres blog:", res.data)
-    // if (res.status === 200) {
-    //   return res.data;
-    // } else {
-    //   return null;
-    // }
+    if (res.status === 200) {
+      return res.data;
+    } else {
+      return null;
+    }
   } catch (err) {
     console.error("Error fetching latest blog post:", err);
     return null;

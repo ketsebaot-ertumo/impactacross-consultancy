@@ -90,6 +90,11 @@ export default function ResourceGrid() {
 
         if ( latestPost.success ) {
           const post = latestPost.data
+          const multimediaResource = {
+            id: post.id,
+            name: post.name,
+            content: post.content,
+          };
       
           setResources((prev) => {
             const exists = prev.some((r) => r.id === post.id);
