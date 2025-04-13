@@ -1,17 +1,18 @@
+import toast from "react-hot-toast";
 import apiClient from "./apiClient";
 
 // get latest blog post
 export async function getLatestBlogPost() {
   try {
     const res = await apiClient.get('/blog/latest');
-    console.log("\\n\\n\nres blog:", res.data)
     if (res.status === 200) {
       return res.data;
     } else {
       return null;
     }
   } catch (err) {
-    console.error("Error fetching latest blog post:", err);
+    // console.error("Error fetching latest blog post:", err);
+    // toast.error('Error fetching latest blog post.');
     return null;
   }
 };
@@ -26,7 +27,7 @@ export async function getAllBlog( page, limit ) {
       return null
     }
   } catch (err) {
-    console.error("Error fetching latest blog:", err);
+    // console.error("Error fetching latest blog:", err);
     return null;
   }
 }
@@ -41,7 +42,7 @@ export async function getSingleBlogPost(id) {
       return null;
     }
   } catch (err) {
-    console.error("Error fetching latest blog:", err);
+    // console.error("Error fetching latest blog:", err);
     return null;
   }
 };
@@ -57,7 +58,7 @@ export async function getLatestPublication() {
         return null;
       }
     } catch (err) {
-      console.error("Error fetching latest post:", err);
+      // console.error("Error fetching latest post:", err);
       return null;
     }
 };
@@ -72,7 +73,7 @@ export async function getAllPublication( page, limit ) {
       return null
     }
   } catch (err) {
-    console.error("Error fetching latest post:", err);
+    // console.error("Error fetching latest post:", err);
     return null;
   }
 }
@@ -89,7 +90,7 @@ export async function getSinglePublicationPost(id) {
       return null;
     }
   } catch (err) {
-    console.error("Error fetching latest publication:", err);
+    // console.error("Error fetching latest publication:", err);
     return null;
   }
 };
@@ -106,13 +107,13 @@ export async function getLatestMultimedia() {
       return null;
     }
   } catch (err) {
-    console.error("Error fetching latest multimedia post:", err);
+    // console.error("Error fetching latest multimedia post:", err);
     return null;
   }
 };
 
 // get all multimedia post
-export async function getAllMultimedia( page, limit ) {
+export async function getAllMultimedias( page, limit ) {
 try {
   const res = await apiClient.get(`/multimedia/?limit=${limit}&page=${page}`);
   if (res.status === 200) {
@@ -121,7 +122,7 @@ try {
     return null
   }
 } catch (err) {
-  console.error("Error fetching latest multimedia post:", err);
+  // console.error("Error fetching latest multimedia post:", err);
   return null;
 }
 }
@@ -138,7 +139,7 @@ try {
     return null;
   }
 } catch (err) {
-  console.error("Error fetching latest multimedia post:", err);
+  // console.error("Error fetching latest multimedia post:", err);
   return null;
 }
 };
@@ -154,13 +155,13 @@ export async function getLatestTraining() {
       return null;
     }
   } catch (err) {
-    console.error("Error fetching latest training post:", err);
+    // console.error("Error fetching latest training post:", err);
     return null;
   }
 };
 
 // get all training post
-export async function getAllTraining( page, limit ) {
+export async function getAllTrainings( page, limit ) {
 try {
   const res = await apiClient.get(`/training/?limit=${limit}&page=${page}`);
   if (res.status === 200) {
@@ -169,7 +170,7 @@ try {
     return null
   }
 } catch (err) {
-  console.error("Error fetching latest training post:", err);
+  // console.error("Error fetching latest training post:", err);
   return null;
 }
 }
@@ -186,7 +187,7 @@ try {
     return null;
   }
 } catch (err) {
-  console.error("Error fetching latest training post:", err);
+  // console.error("Error fetching latest training post:", err);
   return null;
 }
 };

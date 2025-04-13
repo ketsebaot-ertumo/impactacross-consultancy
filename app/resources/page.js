@@ -5,6 +5,8 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import ResourceCard from "../components/ResourceCard";
 import { getLatestBlogPost, getLatestMultimedia, getLatestPublication, getLatestTraining } from "../lib/api";
+import Loader from "../components/Loader";
+import toast from "react-hot-toast";
 
 export default function ResourceGrid() {
   // const [resources, setResources] = useState([
@@ -34,7 +36,6 @@ export default function ResourceGrid() {
     const loadBlogs = async () => {
       try {
         const latestBlog = await getLatestBlogPost();
-        console.log("\n\n latest blog:", latestBlog)
 
         if ( latestBlog?.success ) {
           const blog = latestBlog.data
@@ -44,10 +45,11 @@ export default function ResourceGrid() {
           });
           
         } else{
-          console.warn("No valid blog returned.");
+          toast.error('No valid blog post returned.');
         }
       } catch (err) {
-        console.warn("No valid blog returned.");
+        toast.error('Could not load blog data.');
+        console.error("Could not load blog data:" + err.message);
         setError("Could not load blog data.");
       } finally {
         setLoading(false);
@@ -62,17 +64,18 @@ export default function ResourceGrid() {
       try {
         const latestPost = await getLatestPublication();
 
-        if ( latestPost.success ) {
+        if ( latestPost?.success ) {
           const publication = latestPost.data
           setResources((prev) => {
             const exists = prev.some((r) => r.id === publication.id);
             return exists ? prev : [publication, ...prev];
           });
         } else{
-          console.warn("No valid post returned.");
+          toast.error('No valid publication post returned.');
         }
       } catch (err) {
-        console.warn("No valid post returned.");
+        toast.error('Could not load post data.');
+        console.warn("Could not load post data:" + err.message);
         setError("Could not load post data.");
       } finally {
         setLoading(false);
@@ -88,7 +91,7 @@ export default function ResourceGrid() {
       try {
         const latestPost = await getLatestMultimedia();
 
-        if ( latestPost.success ) {
+        if ( latestPost?.success ) {
           const post = latestPost.data
           const multimediaResource = {
             id: post.id,
@@ -101,10 +104,11 @@ export default function ResourceGrid() {
             return exists ? prev : [post, ...prev];
           });
         } else{
-          console.warn("No valid multimedia post returned.");
+          toast.error('No valid multimedia post returned.');
         }
       } catch (err) {
-        console.warn("No valid multimedia post returned.");
+        toast.error('Could not load multimedia post data.');
+        console.warn("Could not load multimedia post data:" +err.message);
         setError("Could not load multimedia post data.");
       } finally {
         setLoading(false);
@@ -120,18 +124,19 @@ export default function ResourceGrid() {
       try {
         const latestPost = await getLatestTraining();
 
-        if ( latestPost.success ) {
+        if ( latestPost?.success ) {
           const training = latestPost.data
           setResources((prev) => {
             const exists = prev.some((r) => r.id === training.id);
             return exists ? prev : [training, ...prev];
           });
         } else{
-          console.warn("No valid training post returned.");
+          toast.error('No valid multimedia post returned.');
         }
       } catch (err) {
-        console.warn("No valid training post returned.");
-        setError("Could not load training post data.");
+          toast.error('Could not load training post data.');
+          console.warn("Could not load training post data:" + err.message);
+          setError("Could not load training post data.");
       } finally {
         setLoading(false);
       }
@@ -142,7 +147,6 @@ export default function ResourceGrid() {
   return (
     <>
         <Header/>
-
         <div className="relative">
             <img 
                 src="/home.jpg"
@@ -157,23 +161,34 @@ export default function ResourceGrid() {
             </div>
         </div>
 
-        <section className="max-w-6xl mx-auto px-6 py-12">
-            <h2 className="text-4xl font-bold text-center text-gray-800 pb-12">Our Resources</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              {resources.map((item) => (
-                <div key={item.id} className="h-full">
-                  <ResourceCard {...item} />
+        {loading ? (
+            <Loader />
+        ) : (
+            resources.length === 0 ? (
+                <main className="container max-w-6xl mx-auto px-6 py-12 text-center text-gray-500 py-36">
+                    <h1 className="text-4xl font-bold mb-6">📚 Services</h1>
+                    <p className="text-lg">No Services found.</p>
+                </main>
+            ) : (
+                <div>
+                  <section className="max-w-6xl mx-auto px-6 py-12">
+                      <h2 className="text-4xl font-bold text-center text-gray-800 pb-12">Our Resources</h2>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                        {resources.map((item) => (
+                          <div key={item.id} className="h-full">
+                            <ResourceCard {...item} />
+                          </div>
+                        ))}
+                      </div>
+                      {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                          {resources.map((item) => (
+                              <ResourceCard key={item.id} {...item} />
+                          ))}
+                      </div> */}
+                  </section>
                 </div>
-              ))}
-            </div>
-            {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                {resources.map((item) => (
-                    <ResourceCard key={item.id} {...item} />
-                ))}
-            </div> */}
-        </section>
-
-        <Footer/>
+            ))}
+          <Footer/>
     </>
   );
 }

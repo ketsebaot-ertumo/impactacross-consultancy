@@ -6,8 +6,8 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import { useEffect, useState } from "react";
 import Loader from "../../components/Loader";
-import { getAllPublication } from "../../lib/api";
 import toast from "react-hot-toast";
+import { notFound } from "next/navigation";
 
 export default function Publications() {
 
@@ -20,9 +20,9 @@ export default function Publications() {
     const [total, setTotal] = useState(3);
 
     useEffect(() => {
-      const loadPublications = async () => {
+      const loadTrainings = async () => {
         try {
-            const response = await getAllPublication(currentPage, pageSize);
+            const response = await getAllMultimedias(currentPage, pageSize);
           
             if (response.data?.length) {
                 setResources(response.data);
@@ -30,17 +30,18 @@ export default function Publications() {
                 setTotal(response.pagination.total);
                 setCurrentPage(response.pagination.page);
             } else{
-                toast.error('No Valid Publication Post Returned.');
+                return notFound();
+                // toast.error('No Valid Publication Post Returned.');
             }
         } catch (err) {
-            toast.error('Could Not Load Publication Data.');
-            console.error("Could not load publication data:", err);
-            setError("Could not load training post data.");
+            toast.error('Could Not Load Training Post Data.');
+            console.error("Could not load training data:", + err);
+            setError("Could not load training data.");
         } finally {
-            setLoading(false);
+          setLoading(false);
         }
       };
-      loadPublications();
+      loadTrainings();
     }, [currentPage, pageSize]);
 
     const handlePagination = (page) => {
@@ -58,33 +59,31 @@ export default function Publications() {
             ) : (
                 resources.length === 0 ? (
                     <main className="container max-w-6xl mx-auto px-6 py-12 text-center text-gray-500 py-36">
-                        <h1 className="text-4xl font-bold mb-6">📑 Publications</h1>
-                        <p className="text-lg">No Publication Post Found.</p>
+                        <h1 className="text-4xl font-bold mb-6">🎓 Training Posts</h1>
+                        <p className="text-lg">No Training Post Found.</p>
                     </main>
                 ) : (
                     <div className="max-w-6xl mx-auto">
                         <main className="container px-8 py-12 text-gray-800">
-                            <h1 className="text-4xl font-bold text-center">📑 Publications</h1>
+                            <h1 className="text-4xl font-bold text-center">🎓 Training Posts</h1>
                         </main>
                         
                         <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 px-8">
                             {resources.map((item) => (
                                 <Link key={item.id} href={`/resources/${item.name}/${item.id}`} passHref>
                                     <div className="group border rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 bg-white cursor-pointer">
-                                        {/* Image */}
                                         <div className="relative h-56 w-full overflow-hidden">
-                                        <Image
-                                            src={item.imageURL ? item.imageURL : ""}
-                                            alt={item.title}
-                                            fill
-                                            className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-300"
-                                        />
-                                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent px-4 py-2 text-white text-sm">
-                                            By {item.author} —
-                                            {new Date(item.published_at).toLocaleDateString("en-US", {
-                                                year: "numeric", month: "long", day: "numeric",
-                                            })}
-                                        </div>
+                                            <Image
+                                                src={item.imageURL}
+                                                alt={item.title}
+                                                fill
+                                                className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-300"
+                                            />
+                                            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent px-4 py-2 text-white text-sm">
+                                                {new Date(item.publishedAt).toLocaleDateString("en-US", {
+                                                    year: "numeric", month: "long", day: "numeric",
+                                                })}
+                                            </div>
                                         </div>
 
                                         {/* Content */}

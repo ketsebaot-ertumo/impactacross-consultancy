@@ -1,10 +1,13 @@
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 if (!API_URL) {
   // throw new Error('❌ API_URL is not defined in environment variables.');
-  console.warn('❌ API_URL is not defined in environment variables.')
+  console.warn('❌ API_URL is not defined in environment variables.');
+  toast.error('❌ API_URL is not defined in environment variables. ');
+
 }
 
 const apiClient = axios.create({

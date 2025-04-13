@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const ResourceCard = ({ id, name, imageURL, title, content }) => {
+const ResourceCard = ({ id, name, imageURL, mediaURL, title, content }) => {
   const link= name.toLowerCase();
   return (
     <Link
@@ -13,7 +13,7 @@ const ResourceCard = ({ id, name, imageURL, title, content }) => {
       {/* Image */}
       <div className="relative w-full md:w-1/3 h-full rounded-2xl overflow-hidden">
         <Image
-          src={imageURL}
+          src={imageURL || mediaURL}
           alt={title}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-300"
